@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "427757428441",
+    "firebase_url": "https://salerent-2366e.firebaseio.com",
+    "project_id": "salerent-2366e",
+    "storage_bucket": "salerent-2366e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:427757428441:android:f5e075837556657564e8c8",
+        "android_client_info": {
+          "package_name": "com.salerent"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "427757428441-545bldqq7etd1q8r1m5fhsdq2kdana8l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.salerent",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "427757428441-but4103mcf0dvhllf074ohetsl69qahe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnyW7B2e9gHqklzQsU1EFoXpbkaJyAkyY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "427757428441-but4103mcf0dvhllf074ohetsl69qahe.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
