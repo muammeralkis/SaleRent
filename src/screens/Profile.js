@@ -85,10 +85,6 @@ function Profile({navigation}) {
 
     function render({item, index}) {
         return (
-            <ScrollView
-                showsHorizontalScrollIndicator={false}
-                horizontal
-            >
                 <TouchableOpacity
                     onPress={() => navigation.navigate('Detail', {data: item, from:"profile"})}
                     onLongPress={() =>
@@ -129,10 +125,6 @@ function Profile({navigation}) {
                         </View>
                     </View>
                 </TouchableOpacity>
-                <View>
-                    <Text>ada</Text>
-                </View>
-            </ScrollView>
         );
     }
 

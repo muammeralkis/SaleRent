@@ -5,10 +5,13 @@ import React from "react";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {View} from 'react-native';
+import {inject, observer} from 'mobx-react';
+import GetStore from '../store/GetStore';
 
 function CustomDrawerContent(props) {
 
     function signOut() {
+        GetStore.reset();
         f.auth().signOut().then(function () {
         }).catch(function (error) {
             ("error")
@@ -48,4 +51,4 @@ function CustomDrawerContent(props) {
         </DrawerContentScrollView>)
 }
 
-export default CustomDrawerContent;
+export default inject('GetStore')(observer(CustomDrawerContent));

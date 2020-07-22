@@ -7,7 +7,7 @@ import {
     Image,
     ScrollView,
     ActivityIndicator,
-    ImageBackground,
+    Linking,
     TouchableOpacity, Alert,
 } from 'react-native';
 import {inject, observer} from 'mobx-react';
@@ -48,9 +48,12 @@ function Detail({route, navigation}) {
                 <FontAwesome color={'white'} size={23} name={'trash'}/>
             </TouchableOpacity>
         ),
-    },
-    );
+    });
 
+
+    function goToCall(){
+
+    }
 
     function deleteAd() {
         console.log(detailData.id);
@@ -59,7 +62,7 @@ function Detail({route, navigation}) {
             : from === 'profile' ? GetStore.ProfileRefresh = true
                 : null;
         firestore().collection('ads').doc(detailData.id).delete().then(function () {
-            Alert.alert('Bilgi', 'İlan başarıyla silindi', [{text: 'Tamam', onPress: () => navigation.goBack()}]);
+            Alert.alert('Bilgi', 'İlan başarıyla silindi', [{text: 'Tamam', onPress: () => reset()}]);
             console.log('Document successfully deleted!');
         }).then(function () {
             f.storage().ref('ads/').child(detailData.data.imageID).delete().then(function() {
@@ -72,6 +75,12 @@ function Detail({route, navigation}) {
             Alert.alert('Hata', error);
             console.error('Error removing document: ', error);
         });
+    }
+
+    function reset(){
+        GetStore.HomeRefresh = true;
+        GetStore.ProfileRefresh = true;
+        navigation.goBack()
     }
 
     function getAdvertiser() {
@@ -96,9 +105,57 @@ function Detail({route, navigation}) {
             <ScrollView style={styles.container}>
                 <Text numberOfLines={1} style={styles.nameText}>{name}</Text>
 
-                <ImageBackground style={styles.adImage} source={{uri: detailData.data.imageLink}}>
-
-                </ImageBackground>
+                <Image style={styles.adImage} source={{uri: detailData.data.imageLink}} />
+                <View style={styles.detailCard}>
+                    <Text style={styles.detailTitle}>
+                        İlan başlığı
+                    </Text>
+                    <Text style={styles.detailText}>
+                        {detailData.data.title}
+                    </Text>
+                </View>
+                <View style={styles.detailCard}>
+                    <Text style={styles.detailTitle}>
+                        Açıklama
+                    </Text>
+                    <Text style={styles.detailText}>
+                        {detailData.data.description}
+                    </Text>
+                </View>
+                <TouchableOpacity
+                    onPress={()=>{Linking.openURL(`tel: ${detailData.data.advertiserContact}`);} }
+                    style={styles.contactCard}>
+                    <Text style={styles.detailTitle}>
+                        Telefon Numarası
+                    </Text>
+                    <Text style={styles.contactText}>
+                        {detailData.data.advertiserContact}
+                    </Text>
+                </TouchableOpacity>
+                <View style={styles.detailCard}>
+                    <Text style={styles.detailTitle}>
+                        Bulunduğu kat
+                    </Text>
+                    <Text style={styles.detailText}>
+                        {detailData.data.floor}
+                    </Text>
+                </View>
+                <View style={styles.detailCard}>
+                    <Text style={styles.detailTitle}>
+                        Oda sayısı
+                    </Text>
+                    <Text style={styles.detailText}>
+                        {detailData.data.rooms}
+                    </Text>
+                </View>
+                <View style={styles.detailCard}>
+                    <Text style={styles.detailTitle}>
+                        Konum
+                    </Text>
+                    <Text style={styles.detailText}>
+                        {detailData.data.location}
+                    </Text>
+                </View>
             </ScrollView>
     );
 }
@@ -111,16 +168,48 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         height: height / 3,
         width,
+        marginBottom:10,
     },
     nameText: {
         fontSize: 16,
         fontWeight: 'bold',
         paddingHorizontal: 20,
         paddingVertical: 5,
-
-        backgroundColor: '#ee6246',
-        color: 'black',
+        backgroundColor: '#ff916b',
+        color: Colors.Navy,
     },
+    detailCard:{
+        marginVertical:5,
+        backgroundColor:'white',
+        borderRadius:15,
+        padding:10,
+        marginHorizontal:10,
+    },
+    detailTitle:{
+        fontWeight: 'bold',
+        color:Colors.Navy,
+        marginHorizontal:5,
+    },
+    detailText:{
+        color:Colors.Text,
+        marginHorizontal:5,
+    },
+    contactCard:{
+        marginVertical:5,
+        backgroundColor:'white',
+        borderRadius:15,
+        padding:10,
+        elevation: 5,
+        shadowColor: '#000',
+        shadowOffset: {width: 0, height: 1},
+        shadowOpacity: 0.3,
+        shadowRadius: 3,
+        marginHorizontal:10,
+    },
+    contactText:{
+        color:Colors.Green,
+        marginHorizontal:5,
+    }
 });
 
 export default inject('GetStore')(observer(Detail));

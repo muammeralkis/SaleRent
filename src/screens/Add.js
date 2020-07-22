@@ -13,6 +13,7 @@ import {
     Image,
 } from 'react-native';
 import {inject, observer} from 'mobx-react';
+import GetStore from '../store/GetStore';
 import Colors from '../assets/Colors';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
@@ -23,7 +24,7 @@ import ImagePicker from 'react-native-image-crop-picker';
 import RNFetchBlob from 'rn-fetch-blob';
 import uuid from 'react-native-uuid';
 
-function Add() {
+function Add({navigation}) {
 
     const [checked, setChecked] = useState('first');
     const [value, setValue] = useState(0);
@@ -32,7 +33,7 @@ function Add() {
     const [rooms, setRooms] = useState('');
     const [floor, setFloor] = useState('');
     const [location, setLocation] = useState('');
-    const [age, setAge] = useState('');
+    const [advertiserContact, setAdvertiserContact] = useState('');
     const [price, setPrice] = useState('');
     const [loading, setLoading] = useState(false);
     const [image, setImage] = useState(null);
@@ -101,7 +102,7 @@ function Add() {
         setLoading(true);
         setDisableButton(true);
 
-        if (!adTitle || !rooms || !floor || !description || !age || !price || !location || !imageUri) {
+        if (!adTitle || !rooms || !floor || !description || !advertiserContact || !price || !location || !imageUri) {
             Alert.alert
             (
                 'Hata',
@@ -166,7 +167,7 @@ function Add() {
             const docRef = firestore().collection('ads');
 
             docRef.add({
-                age,
+                advertiserContact,
                 imageLink: url,
                 imageID,
                 description,
@@ -194,6 +195,7 @@ function Add() {
     }
 
     function reset() {
+        GetStore.HomeRefresh = true;
         setLoading(false);
         setDisableButton(false);
         setImageUri(null);
@@ -202,11 +204,12 @@ function Add() {
         setImage(null);
         setPrice();
         setAdTitle();
-        setAge();
+        setAdvertiserContact();
         setDescription();
         setFloor();
         setLocation();
         setRooms();
+        navigation.navigate('Home');
     }
 
 
@@ -243,8 +246,6 @@ function Add() {
                         onSubmitEditing={() => {
                             this.second.focus();
                         }}
-                        onChangeText={text => setName(text)}
-                        returnKeyType={'next'}
                         blurOnSubmit={false}
                         onChangeText={text => setAdTitle(text)}
                         value={adTitle}
@@ -267,6 +268,20 @@ function Add() {
                     />
                     <TextInput
                         ref={(input) => {
+                            this.fourth = input;
+                        }}
+                        onSubmitEditing={() => {
+                            this.fifth.focus();
+                        }}
+                        style={styles.input}
+                        keyboardType={'phone-pad'}
+                        placeholder={'Telefon Numarası'}
+                        onChangeText={text => setAdvertiserContact(text)}
+                        value={advertiserContact}
+                        returnKeyType={'next'}
+                    />
+                    <TextInput
+                        ref={(input) => {
                             this.third = input;
                         }}
                         onSubmitEditing={() => {
@@ -277,20 +292,6 @@ function Add() {
                         placeholder={'Bulunduğu kat'}
                         onChangeText={text => setFloor(text)}
                         value={floor}
-                        returnKeyType={'next'}
-                    />
-                    <TextInput
-                        ref={(input) => {
-                            this.fourth = input;
-                        }}
-                        onSubmitEditing={() => {
-                            this.fifth.focus();
-                        }}
-                        style={styles.input}
-                        keyboardType={'number-pad'}
-                        placeholder={'Bina yaşı'}
-                        onChangeText={text => setAge(text)}
-                        value={age}
                         returnKeyType={'next'}
                     />
                     <TextInput

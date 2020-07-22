@@ -1,6 +1,18 @@
 import { decorate, observable, action } from "mobx";
 
 class GetStore {
+
+    @action reset(){
+     this.allAds = [];
+     this.HomeRefresh = false;
+     this.filterData = [];
+     this.FilterRefresh = false;
+     this.historicData = [];
+     this.authUser = []
+     this.ProfileRefresh = false;
+    }
+
+
     // Home
     @observable allAds = [];
     @observable HomeRefresh = false;

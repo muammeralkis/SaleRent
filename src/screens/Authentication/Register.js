@@ -100,12 +100,6 @@ function Register({navigation}) {
                         'Bağlantı Hatası',
                         [{text: 'Tamam', onPress: () => setLoading(false)}],
                     );
-                } else {
-                    Alert.alert(
-                        'Hata',
-                        'Bir şeyler yolunda değil besbelli. bkz: Nilipek.',
-                        [{text: 'Tamam', onPress: () => setLoading(false)}],
-                    );
                 }
             });
         }
