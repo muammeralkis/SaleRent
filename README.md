@@ -2,8 +2,9 @@
 SaleRent is a mobile buy-sell automation for Rent/Sale homes. 
 
 
-![Record](./src/SaleRent.mp4)
-
+<video width="320" height="240" controls>
+  <source src="./src/SaleRent.mp4" type="video/mp4">
+</video>
 
 Twitter: [@muammeralkis](https://www.twitter.com/muammeralkis) <br />
 Instagram: [@muammeralkis](https://www.instagram.com/muammeralkis) <br />
